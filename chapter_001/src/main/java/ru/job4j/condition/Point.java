@@ -2,6 +2,8 @@ package ru.job4j.condition;
 
 /**
  * Represents a point in a 2D coordinate system.
+ *
+ * @author Denis Abakumov
  */
 public class Point {
 
