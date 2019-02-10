@@ -1,5 +1,5 @@
 /**
-* Package for calculate task.
+* Test for the Calculate class.
 *
 * @author Denis Abakumov (denisab85@gmail.com)
 * @version $Id$
