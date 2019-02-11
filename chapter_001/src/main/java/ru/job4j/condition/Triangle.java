@@ -58,8 +58,9 @@ public class Triangle {
      */
     private boolean exist(double ab, double ac, double bc) {
         double p = semiperimeter(ab, ac, bc);
-        if (ab >= p || ac >= p || bc >= p)
+        if (ab >= p || ac >= p || bc >= p) {
             return false;
+        }
         return (ab <= 0 || ac <= 0 || bc <= 0);
     }
 }

@@ -8,8 +8,8 @@ public class Converter {
     /**
      * Текущие курсы валют.
      */
-    private final int EUR_RUB = 70;
-    private final int USD_RUB = 60;
+    private final int eurRub = 70;
+    private final int usdRub = 60;
 
     /**
      * Конвертирует рубли в евро.
@@ -18,7 +18,7 @@ public class Converter {
      * @return Евро.
      */
     public int rubleToEuro(int value) {
-        return value / EUR_RUB;
+        return value / eurRub;
     }
 
     /**
@@ -28,7 +28,7 @@ public class Converter {
      * @return Рубли.
      */
     public int euroToRuble(int value) {
-        return value * EUR_RUB;
+        return value * eurRub;
     }
 
     /**
@@ -38,7 +38,7 @@ public class Converter {
      * @return Доллары.
      */
     public int rubleToDollar(int value) {
-        return value / USD_RUB;
+        return value / usdRub;
     }
 
     /**
@@ -48,7 +48,7 @@ public class Converter {
      * @return Рубли.
      */
     public int dollarToRuble(int value) {
-        return value * USD_RUB;
+        return value * usdRub;
     }
 }
 

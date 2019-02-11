@@ -38,8 +38,9 @@ public class Max {
      */
     public int max(int... args) {
         int max = args[0];
-        for (int x : args)
+        for (int x : args) {
             max = max(max, x);
+        }
         return max;
     }
 }
