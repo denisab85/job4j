@@ -32,4 +32,18 @@ public class MaxTest {
         assertThat(result, is(5));
     }
 
+    @Test
+    public void whenThreeArgumentsPassed() {
+        Max maxim = new Max();
+        int result = maxim.max(5, 6, 5);
+        assertThat(result, is(6));
+    }
+
+    @Test
+    public void whenArbitraryNumberOfArgumentsPassed() {
+        Max maxim = new Max();
+        int result = maxim.max(1, -6, 25, 48, -50);
+        assertThat(result, is(48));
+    }
+
 }
