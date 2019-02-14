@@ -17,8 +17,9 @@ public class Factorial {
      * @return factorial (n!)
      */
     public int calc(int n) {
-        if (n < 0)
+        if (n < 0) {
             throw new IllegalArgumentException("Cannot calculate factorial for negative numbers.");
+        }
         int result = 1;
         for (int i = 1; i <= n; i++) {
             result *= i;
