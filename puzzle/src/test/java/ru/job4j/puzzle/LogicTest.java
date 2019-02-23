@@ -16,7 +16,7 @@ public class LogicTest {
                         {0, 0, 1, 0, 0},
                         {0, 0, 1, 0, 0},
                         {0, 0, 1, 0, 0},
-                        {0, 0, 1, 0, 0},
+                        {0, 0, 1, 0, 0}
                 };
             }
         };
@@ -33,7 +33,7 @@ public class LogicTest {
                         {0, 0, 0, 0, 0},
                         {0, 0, 0, 0, 0},
                         {1, 1, 1, 1, 1},
-                        {0, 0, 0, 0, 0},
+                        {0, 0, 0, 0, 0}
                 };
             }
         };
@@ -50,10 +50,42 @@ public class LogicTest {
                         {0, 0, 1, 0, 0},
                         {1, 1, 0, 1, 1},
                         {0, 0, 1, 0, 0},
-                        {0, 0, 1, 0, 0},
+                        {0, 0, 1, 0, 0}
                 };
             }
         };
         assertThat(logic.isWin(), is(false));
+    }
+
+    @Test
+    public void whenEvenSizeVerticalLineThenWin() {
+        Logic logic = new Logic(4) {
+            @Override
+            public int[][] convert() {
+                return new int[][]{
+                        {0, 0, 1, 0},
+                        {0, 0, 1, 0},
+                        {1, 1, 1, 0},
+                        {0, 0, 1, 0}
+                };
+            }
+        };
+        assertThat(logic.isWin(), is(true));
+    }
+
+    @Test
+    public void whenEvenSizeHorizontalLineThenWin() {
+        Logic logic = new Logic(4) {
+            @Override
+            public int[][] convert() {
+                return new int[][]{
+                        {0, 0, 0, 0},
+                        {0, 0, 1, 0},
+                        {1, 1, 1, 1},
+                        {0, 0, 1, 0}
+                };
+            }
+        };
+        assertThat(logic.isWin(), is(true));
     }
 }

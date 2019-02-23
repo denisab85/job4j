@@ -68,29 +68,20 @@ public class Logic {
         return rst;
     }
 
-    private boolean containsLine(BiPredicate<Integer, Integer> lineCondition) {
-        boolean result = false;
-        int x = -1;
-        while (!result && ++x < this.size) {
-            result = true;
-            for (int y = 0; y < this.size; y++) {
-                if (!lineCondition.test(x, y)) {
-                    result = false;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
     public boolean isWin() {
         int[][] table = this.convert();
+        boolean result = false;
+        int x = -1;
 
-        // Search for horizontal line
-        boolean result = containsLine((row, column) -> table[row][column] == 1);
-        // Search for vertical line
-        result |= containsLine((column, row) -> table[row][column] == 1);
-
+        while (!result && ++x < this.size) {
+            boolean hResult = true;
+            boolean vResult = true;
+            for (int y = 0; y < this.size; y++) {
+                hResult &= (table[x][y] == 1);
+                vResult &= (table[y][x] == 1);
+            }
+            result = hResult || vResult;
+        }
         return result;
     }
 
