@@ -1,7 +1,7 @@
 public class Doctor extends Profession {
 
-    public void treat(Patient patient) {
-
+    public Diagnose heal(Patient patient) {
+        return new Diagnose();
     }
 
 }
