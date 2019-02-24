@@ -21,10 +21,8 @@ public class ArrayDuplicate {
         int end = array.length;
         int i = 0;
         while (++i < end) {
-            // compare with each of the preceding elements
             for (int c = 0; c < i; c++) {
                 if (array[i].equals(array[c])) {
-                    // move current element #i to the end
                     String duplicate = array[i];
                     System.arraycopy(array, i + 1, array, i, array.length - i - 1);
                     array[--end] = duplicate;

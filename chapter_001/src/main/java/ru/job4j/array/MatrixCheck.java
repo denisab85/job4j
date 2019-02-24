@@ -17,7 +17,6 @@ public class MatrixCheck {
      */
     public boolean mono(boolean[][] data) {
         boolean result = true;
-
         int size = data.length;
         for (int i = 1; i < size; i++) {
             if (data[i].length < size) {

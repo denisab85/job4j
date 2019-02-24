@@ -41,7 +41,6 @@ public class Paint {
         return this.loopBy(height * 2 - 1, height, (x, y) -> y >= height - x - 1 && x <= y + height - 1);
     }
 
-
     private String loopBy(int width, int height, BiPredicate<Integer, Integer> predicate) {
         StringJoiner board = new StringJoiner(System.lineSeparator());
         for (int y = 0; y < height; y++) {
