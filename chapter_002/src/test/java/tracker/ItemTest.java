@@ -18,15 +18,15 @@ public class ItemTest {
 
     @Test
     public void whenCreateNewItemThenNameDescriptionAndDateCreatedAreSet() {
-        Date beforeCreation = new Date();
+        long beforeCreation = System.currentTimeMillis();
         Item item = new Item("test1", "testDescription");
-        Date afterCreation = new Date();
+        long afterCreation = System.currentTimeMillis();
 
         assertThat(item.getName(), is("test1"));
         assertThat(item.getDescription(), is("testDescription"));
 
-        assertThat(item.getCreated().after(beforeCreation) || item.getCreated().equals(beforeCreation), is(true));
-        assertThat(item.getCreated().before(afterCreation) || item.getCreated().equals(afterCreation), is(true));
+        assertThat(item.getCreated() >= beforeCreation, is(true));
+        assertThat(item.getCreated() <= afterCreation, is(true));
     }
 
     @Test

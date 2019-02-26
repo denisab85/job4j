@@ -1,5 +1,6 @@
 package tracker;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
@@ -45,7 +46,7 @@ public class Tracker {
     }
 
     /**
-     * Replace an existing item with a new one.
+     * Replace an existing item with a new one while keeping the original ID.
      *
      * @param id   unique identifier of the item to be replaced.
      * @param item replacement item.
@@ -55,6 +56,7 @@ public class Tracker {
         boolean replaced = false;
         for (int i = 0; i < position; i++) {
             if (items[i].getId().equals(id)) {
+                item.setId(items[i].getId());
                 items[i] = item;
                 replaced = true;
                 break;
@@ -88,9 +90,7 @@ public class Tracker {
      * @return a new array consisting of items in the storage.
      */
     public Item[] findAll() {
-        Item[] result = new Item[position];
-        System.arraycopy(items, 0, result, 0, position);
-        return result;
+        return Arrays.copyOf(items, position);
     }
 
     /**

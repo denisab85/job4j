@@ -14,7 +14,7 @@ public class Item {
     private String id;
     private final String name;
     private final String description;
-    private final Date created;
+    private final long created;
     private String comments;
 
     /**
@@ -26,7 +26,7 @@ public class Item {
     public Item(String name, String description) {
         this.name = name;
         this.description = description;
-        this.created = new Date();
+        this.created = System.currentTimeMillis();
     }
 
     public String getId() {
@@ -45,7 +45,7 @@ public class Item {
         return description;
     }
 
-    public Date getCreated() {
+    public long getCreated() {
         return created;
     }
 
