@@ -18,7 +18,6 @@ public class SortedArrayMergeTest {
     public void whenArraysOfSameSizeThenMergedArray() {
         int[] array1 = {1, 2, 5, 8, 10};
         int[] array2 = {1, 3, 4, 5, 7};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {1, 1, 2, 3, 4, 5, 5, 7, 8, 10};
@@ -29,7 +28,6 @@ public class SortedArrayMergeTest {
     public void whenFirstArrayIsSmallerThenMergedArray() {
         int[] array1 = {1, 2, 5, 8, 10};
         int[] array2 = {1, 3, 4, 5, 7, 15};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {1, 1, 2, 3, 4, 5, 5, 7, 8, 10, 15};
@@ -40,7 +38,6 @@ public class SortedArrayMergeTest {
     public void whenFirstArrayIsBiggerThenMergedArray() {
         int[] array1 = {-1, 2};
         int[] array2 = {1};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {-1, 1, 2};
@@ -51,7 +48,6 @@ public class SortedArrayMergeTest {
     public void whenMergeTwoArraysWithAllNumbersEqual() {
         int[] array1 = {1, 1, 1};
         int[] array2 = {1, 1, 1, 1, 1};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {1, 1, 1, 1, 1, 1, 1, 1};
@@ -62,7 +58,6 @@ public class SortedArrayMergeTest {
     public void whenMergeTwoArraysOfSize1() {
         int[] array1 = {1};
         int[] array2 = {1};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {1, 1};
@@ -73,7 +68,6 @@ public class SortedArrayMergeTest {
     public void whenMergeTwoEmptyArraysThenEmptyArray() {
         int[] array1 = {};
         int[] array2 = {};
-
         SortedArrayMerge merger = new SortedArrayMerge();
         int[] merged = merger.merge(array1, array2);
         int[] expected = {};
