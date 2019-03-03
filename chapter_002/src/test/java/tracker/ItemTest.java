@@ -2,8 +2,6 @@ package tracker;
 
 import org.junit.Test;
 
-import java.util.Date;
-
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
