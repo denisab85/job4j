@@ -18,6 +18,7 @@ import static org.junit.Assert.assertThat;
 public class PaintTest {
     @Test
     public void whenDrawSquare() {
+        PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         String expected = new StringJoiner(System.lineSeparator())
@@ -33,10 +34,11 @@ public class PaintTest {
                 .toString();
         new Paint().draw(new Square());
         assertThat(new String(out.toByteArray()), is(expected));
-        System.setOut(System.out);
+        System.setOut(original);
     }
     @Test
     public void whenDrawTriangle() {
+        PrintStream original = System.out;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         String expected = new StringJoiner(System.lineSeparator())
@@ -52,6 +54,6 @@ public class PaintTest {
                 .toString();
         new Paint().draw(new Triangle());
         assertThat(new String(out.toByteArray()), is(expected));
-        System.setOut(System.out);
+        System.setOut(original);
     }
 }
