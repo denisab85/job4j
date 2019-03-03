@@ -89,7 +89,7 @@ public class Tracker {
      *
      * @return a new array consisting of items in the storage.
      */
-    public Item[] findAll() {
+    public Item[] getAll() {
         return Arrays.copyOf(items, position);
     }
 
@@ -131,7 +131,7 @@ public class Tracker {
         StringJoiner result = new StringJoiner(System.lineSeparator());
         result.add(header);
         int index = 0;
-        for (Item item : this.findAll()) {
+        for (Item item : this.getAll()) {
             result.add(String.format("%03d  %s", ++index, item.toString()));
         }
         return result.toString();
