@@ -1,8 +1,8 @@
 package tracker;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Random;
+import java.util.StringJoiner;
 
 /**
  * Issue tracker. Contains issues, which are represented as items.
@@ -42,7 +42,7 @@ public class Tracker {
      * @return unique key.
      */
     private String generateId() {
-        return (new Date()).toString() + rnd.nextInt();
+        return String.format("%d%d", System.currentTimeMillis(), rnd.nextInt(Integer.MAX_VALUE));
     }
 
     /**
@@ -118,9 +118,20 @@ public class Tracker {
      */
     public Item findById(String id) {
         for (Item item : items)
-            if (item.getId().equals(id))
+            if (item != null && item.getId().equals(id))
                 return item;
         return null;
     }
 
+    @Override
+    public String toString() {
+        String header = " # ||      Created      ||          ID           ||   Name";
+        StringJoiner result = new StringJoiner(System.lineSeparator());
+        result.add(header);
+        int index = 0;
+        for (Item item : this.findAll()) {
+            result.add(String.format("%03d  %s", ++index, item.toString()));
+        }
+        return result.toString();
+    }
 }

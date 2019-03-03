@@ -1,5 +1,7 @@
 package tracker;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -12,10 +14,12 @@ import java.util.Date;
 public class Item {
 
     private String id;
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
     private final long created;
     private String comments;
+
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
     /**
      * Creates an item and sets its name and description.
@@ -41,8 +45,16 @@ public class Item {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public long getCreated() {
@@ -57,4 +69,9 @@ public class Item {
         this.comments = comments;
     }
 
+    @Override
+    public String toString() {
+        Date createdDate = new Date(created);
+        return String.format("%s  %23s  %s", dateFormat.format(createdDate), id, name);
+    }
 }
