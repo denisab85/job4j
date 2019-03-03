@@ -117,9 +117,11 @@ public class Tracker {
      * @return found item or null if not found.
      */
     public Item findById(String id) {
-        for (Item item : items)
-            if (item != null && item.getId().equals(id))
+        for (Item item : items) {
+            if (item != null && item.getId().equals(id)) {
                 return item;
+            }
+        }
         return null;
     }
 

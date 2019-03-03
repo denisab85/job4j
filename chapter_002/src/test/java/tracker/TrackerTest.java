@@ -36,12 +36,14 @@ public class TrackerTest {
     @Test
     public void whenFindExistingItemByNameThenReturnSameItem() {
         Tracker tracker = new Tracker();
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) {
             tracker.add(new Item("item" + i, "testDescription"));
+        }
         Item item = new Item("test", "testDescription");
         tracker.add(item);
-        for (int i = 5; i < 10; i++)
+        for (int i = 5; i < 10; i++) {
             tracker.add(new Item("item" + i, "testDescription"));
+        }
         assertThat(tracker.findAllByName("test")[0], is(item));
     }
 
