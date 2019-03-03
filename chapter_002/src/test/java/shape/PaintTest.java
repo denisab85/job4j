@@ -35,4 +35,23 @@ public class PaintTest {
         assertThat(new String(out.toByteArray()), is(expected));
         System.setOut(System.out);
     }
+    @Test
+    public void whenDrawTriangle() {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(out));
+        String expected = new StringJoiner(System.lineSeparator())
+                .add("#")
+                .add("##")
+                .add("###")
+                .add("####")
+                .add("#####")
+                .add("######")
+                .add("#######")
+                .add("########")
+                .add("")
+                .toString();
+        new Paint().draw(new Triangle());
+        assertThat(new String(out.toByteArray()), is(expected));
+        System.setOut(System.out);
+    }
 }
