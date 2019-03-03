@@ -29,13 +29,7 @@ public class StartUI {
     }
 
     public void init() {
-        Item item;
-        String id;
-        String name;
-        String description;
-        String comments;
         boolean exit = false;
-
         while (!exit) {
             printMenu();
             String selection = input.request("Select an action: ");
@@ -72,8 +66,7 @@ public class StartUI {
     }
 
     private static void findByName(Input input, Tracker tracker) {
-        String name;
-        name = input.request("New item(s) name: ");
+        String name = input.request("New item(s) name: ");
         Item[] items = tracker.findAllByName(name);
         if (items[0] == null) {
             System.out.println("Item(s) not found.");
@@ -86,10 +79,8 @@ public class StartUI {
     }
 
     private static void findById(Input input, Tracker tracker) {
-        String id;
-        Item item;
-        id = input.request("Enter item ID: ");
-        item = tracker.findById(id);
+        String id = input.request("Enter item ID: ");
+        Item item = tracker.findById(id);
         if (item == null) {
             System.out.println("Item ID not found.");
         } else {
@@ -98,10 +89,8 @@ public class StartUI {
     }
 
     private static void deleteItem(Input input, Tracker tracker) {
-        String id;
-        Item item;
-        id = input.request("Enter item ID: ");
-        item = tracker.findById(id);
+        String id = input.request("Enter item ID: ");
+        Item item = tracker.findById(id);
         if (item == null) {
             System.out.println("Item ID not found.");
         } else {
@@ -111,20 +100,15 @@ public class StartUI {
     }
 
     private static void editItem(Input input, Tracker tracker) {
-        String id;
-        Item item;
-        String name;
-        String description;
-        String comments;
-        id = input.request("Enter item ID: ");
-        item = tracker.findById(id);
+        String id = input.request("Enter item ID: ");
+        Item item = tracker.findById(id);
         if (item == null) {
             System.out.println("Item ID not found.");
         } else {
             System.out.println(item);
-            name = input.request("Enter item name: ");
-            description = input.request("Enter item description: ");
-            comments = input.request("Enter item comments: ");
+            String name = input.request("Enter item name: ");
+            String description = input.request("Enter item description: ");
+            String comments = input.request("Enter item comments: ");
             item.setName(name);
             item.setDescription(description);
             item.setComments(comments);
@@ -133,12 +117,9 @@ public class StartUI {
     }
 
     private static void addNewItem(Input input, Tracker tracker) {
-        String name;
-        String description;
-        Item item;
-        name = input.request("Enter item name: ");
-        description = input.request("Enter item description: ");
-        item = new Item(name, description);
+        String name = input.request("Enter item name: ");
+        String description = input.request("Enter item description: ");
+        Item item = new Item(name, description);
         tracker.add(item);
         System.out.println(item);
     }
