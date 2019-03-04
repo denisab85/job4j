@@ -10,8 +10,8 @@ package tracker;
  */
 public class StartUI {
 
-    private Input input;
-    private Tracker tracker;
+    private final Input input;
+    private final Tracker tracker;
     private final String n = System.lineSeparator();
 
     private enum Action { ADD_NEW, SHOW_ALL, EDIT_ITEM, DELETE_ITEM, FIND_ITEM_BY_ID, FIND_ITEMS_BY_NAME, EXIT }
