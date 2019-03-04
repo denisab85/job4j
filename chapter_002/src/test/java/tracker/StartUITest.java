@@ -41,8 +41,8 @@ public class StartUITest {
 
     @Test
     public void whenUserAddItemThenTrackerHasThisItem() {
-        Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"0", "test name", "desc", "y"});
+        new StartUI(input, tracker).init();
         assertThat(tracker.getAll()[0].getName(), is("test name"));
     }
 
@@ -53,32 +53,32 @@ public class StartUITest {
         expected.add("001  " + item.toString());
         item = tracker.add(new Item("test name 2", "desc2"));
         expected.add("002  " + item.toString());
-        Input input = new StubInput(new String[]{"1", "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"1", "y"});
+        new StartUI(input, tracker).init();
         assertThat(getOutput(), containsString(expected.toString()));
     }
 
     @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"2", item.getId(), "name replaced", "description replaced", "comment", "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"2", item.getId(), "name replaced", "description replaced", "comment", "y"});
+        new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()).getName(), is("name replaced"));
     }
 
     @Test
     public void whenDeleteThenItemDisappearsFromTracker() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"3", item.getId(), "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"3", item.getId(), "y"});
+        new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()), nullValue());
     }
 
     @Test
     public void whenFindItemByIdThenReturnItem() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"4", item.getId(), "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"4", item.getId(), "y"});
+        new StartUI(input, tracker).init();
         assertThat(getOutput(), containsString(item.toString()));
     }
 
@@ -89,8 +89,8 @@ public class StartUITest {
         expected.add(item.toString());
         item = tracker.add(new Item("same name", "desc2"));
         expected.add(item.toString());
-        Input input = new StubInput(new String[]{"5", "same name", "6"});
-        new StartUI(tracker, input).init();
+        Input input = new StubInput(new String[]{"5", "same name", "y"});
+        new StartUI(input, tracker).init();
         assertThat(getOutput(), containsString(expected.toString()));
     }
 
