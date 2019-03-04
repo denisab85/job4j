@@ -19,7 +19,6 @@ public class TriangleTest {
     @Test
     public void whenDrawTriangleThenOutputTriangle() {
         Triangle triangle = new Triangle();
-        String n = System.lineSeparator();
         String expected = new StringJoiner(System.lineSeparator())
                 .add("#")
                 .add("##")
