@@ -10,7 +10,6 @@ import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
-import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -24,6 +23,14 @@ public class StartUITest {
     private final Tracker tracker = new Tracker();
     private final PrintStream original = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private String expectedMenu = String.join(System.lineSeparator(), "0. Add item to the tracker.",
+            " 1. Show all items.",
+            " 2. Edit item.",
+            " 3. Delete item.",
+            " 4. Find item by ID.",
+            " 5. Find item(s) by name.",
+            "");
+    private String expectedHeader = " # ||      Created      ||          ID           ||   Name" + System.lineSeparator();
 
     @Before
     public void mockOutput() {
@@ -55,7 +62,7 @@ public class StartUITest {
         expected.add("002  " + item.toString());
         Input input = new StubInput(new String[]{"1", "y"});
         new StartUI(input, tracker).init();
-        assertThat(getOutput(), containsString(expected.toString()));
+        assertThat(getOutput().trim(), is(expectedMenu + expectedHeader + expected.toString()));
     }
 
     @Test
@@ -79,7 +86,7 @@ public class StartUITest {
         Item item = tracker.add(new Item("test name", "desc"));
         Input input = new StubInput(new String[]{"4", item.getId(), "y"});
         new StartUI(input, tracker).init();
-        assertThat(getOutput(), containsString(item.toString()));
+        assertThat(getOutput().trim(), is(expectedMenu + item.toString()));
     }
 
     @Test
@@ -91,7 +98,7 @@ public class StartUITest {
         expected.add(item.toString());
         Input input = new StubInput(new String[]{"5", "same name", "y"});
         new StartUI(input, tracker).init();
-        assertThat(getOutput(), containsString(expected.toString()));
+        assertThat(getOutput().trim(), is(expectedMenu + expected.toString()));
     }
 
 }
