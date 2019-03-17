@@ -34,11 +34,23 @@ public class Menu {
         this.tracker = tracker;
     }
 
-    public void select(int key) {
+    /**
+     * Activates a menu item by its index.
+     *
+     * @param key index of the selected item.
+     */
+    public void select(int key) throws InvalidInputException {
+        UserAction selection = null;
         for (UserAction action : this.actions) {
             if (action != null && action.getKey() == key) {
-                action.execute(input, tracker);
+                selection = action;
+                break;
             }
+        }
+        if (selection != null) {
+            selection.execute(input, tracker);
+        } else {
+            throw new InvalidInputException("Invalid selection");
         }
     }
 
@@ -51,6 +63,15 @@ public class Menu {
         }
     }
 
+    /**
+     * Returns an array of all possible actions for this menu.
+     *
+     * @return an array of all possible actions.
+     */
+    public UserAction[] getActions() {
+        return actions;
+    }
+
     private static class AddItem implements UserAction {
         @Override
         public int getKey() {
@@ -59,8 +80,8 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            String name = input.request("Enter item name: ");
-            String description = input.request("Enter item description: ");
+            String name = input.requestString("Enter item name: ");
+            String description = input.requestString("Enter item description: ");
             Item item = new Item(name, description);
             tracker.add(item);
             System.out.println(item);
@@ -80,7 +101,7 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println(tracker);
+            System.out.println(tracker.getAllAsString());
         }
 
         @Override
@@ -97,19 +118,19 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            String id = input.request("Enter item ID: ");
-            Item item = tracker.findById(id);
-            if (item == null) {
+            String id = input.requestString("Enter item ID: ");
+            Item oldItem = tracker.findById(id);
+            if (oldItem == null) {
                 System.out.println("Item ID not found.");
             } else {
-                System.out.println(item);
-                String name = input.request("Enter item name: ");
-                String description = input.request("Enter item description: ");
-                String comments = input.request("Enter item comments: ");
-                item.setName(name);
-                item.setDescription(description);
-                item.setComments(comments);
-                System.out.println(item);
+                System.out.println(oldItem);
+                String name = input.requestString("Enter newItem name: ");
+                String description = input.requestString("Enter newItem description: ");
+                String comments = input.requestString("Enter newItem comments: ");
+                Item newItem = new Item(name, description);
+                newItem.setComments(comments);
+                tracker.replace(id, newItem);
+                System.out.println(newItem);
             }
         }
 
@@ -127,14 +148,9 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            String id = input.request("Enter item ID: ");
+            String id = input.requestString("Enter item ID: ");
             Item item = tracker.findById(id);
-            if (item == null) {
-                System.out.println("Item ID not found.");
-            } else {
-                tracker.delete(id);
-                System.out.println("Item removed.");
-            }
+            System.out.println(tracker.delete(id) ? "Item removed." : "Item ID not found.");
         }
 
         @Override
@@ -151,7 +167,7 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            String id = input.request("Enter item ID: ");
+            String id = input.requestString("Enter item ID: ");
             Item item = tracker.findById(id);
             if (item == null) {
                 System.out.println("Item ID not found.");
@@ -174,7 +190,7 @@ public class Menu {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            String name = input.request("New item(s) name: ");
+            String name = input.requestString("New item(s) name: ");
             Item[] items = tracker.findAllByName(name);
             if (items[0] == null) {
                 System.out.println("Item(s) not found.");

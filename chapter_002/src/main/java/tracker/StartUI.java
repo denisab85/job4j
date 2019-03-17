@@ -1,6 +1,11 @@
 package tracker;
 
+import tracker.menu.InvalidInputException;
 import tracker.menu.Menu;
+import tracker.menu.UserAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CLI for the Issue tracker.
@@ -32,7 +37,7 @@ public class StartUI {
      * @param args ignored.
      */
     public static void main(String[] args) {
-        StartUI ui = new StartUI(new ConsoleInput(), new Tracker());
+        StartUI ui = new StartUI(new ValidateInput(), new Tracker());
         ui.init();
     }
 
@@ -41,12 +46,21 @@ public class StartUI {
      */
     public void init() {
         Menu menu = new Menu(input, tracker);
+        boolean exit = false;
+        List<Integer> range = new ArrayList<>();
+        for (UserAction action : menu.getActions()) {
+            range.add(action.getKey());
+        }
         do {
             menu.show();
-            String selection = input.request("Select an action: ");
-            int key = Integer.parseInt(selection.trim());
-            menu.select(key);
-        } while (!this.input.request("Exit? [y/n]: ").equalsIgnoreCase("y"));
+            try {
+                int key = input.requestInt("Select an action: ", range);
+                menu.select(key);
+                exit = this.input.requestString("Exit? [y/n]: ").equalsIgnoreCase("y");
+            } catch (InvalidInputException e) {
+                System.out.println(e.getLocalizedMessage());
+            }
+        } while (!exit);
     }
 
 }

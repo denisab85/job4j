@@ -125,8 +125,7 @@ public class Tracker {
         return null;
     }
 
-    @Override
-    public String toString() {
+    public String getAllAsString() {
         String header = " # ||      Created      ||          ID           ||   Name";
         StringJoiner result = new StringJoiner(System.lineSeparator());
         result.add(header);
@@ -135,5 +134,10 @@ public class Tracker {
             result.add(String.format("%03d  %s", ++index, item.toString()));
         }
         return result.toString();
+    }
+
+    @Override
+    public String toString() {
+        return getAllAsString();
     }
 }

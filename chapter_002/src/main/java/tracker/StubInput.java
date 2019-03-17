@@ -1,5 +1,10 @@
 package tracker;
 
+import java.util.List;
+
+/**
+ * A stub class for mocking user input, e.g. in tests.
+ */
 public class StubInput implements Input {
 
     private final String[] answers;
@@ -10,7 +15,18 @@ public class StubInput implements Input {
     }
 
     @Override
-    public String request(String prompt) {
+    public String requestString(String prompt) {
         return answers[position++];
     }
+
+    @Override
+    public int requestInt(String prompt) {
+        return Integer.parseInt(requestString(prompt));
+    }
+
+    @Override
+    public int requestInt(String prompt, List<Integer> range) {
+        return Integer.parseInt(requestString(prompt));
+    }
+
 }
