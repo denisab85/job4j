@@ -149,7 +149,6 @@ public class Menu {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.requestString("Enter item ID: ");
-            Item item = tracker.findById(id);
             System.out.println(tracker.delete(id) ? "Item removed." : "Item ID not found.");
         }
 
