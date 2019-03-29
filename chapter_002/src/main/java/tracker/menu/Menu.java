@@ -39,18 +39,12 @@ public class Menu {
      *
      * @param key index of the selected item.
      */
-    public void select(int key) throws InvalidInputException {
-        UserAction selection = null;
+    public void select(int key) {
         for (UserAction action : this.actions) {
             if (action != null && action.getKey() == key) {
-                selection = action;
+                action.execute(input, tracker);
                 break;
             }
-        }
-        if (selection != null) {
-            selection.execute(input, tracker);
-        } else {
-            throw new InvalidInputException("Invalid selection");
         }
     }
 
@@ -191,11 +185,11 @@ public class Menu {
         public void execute(Input input, Tracker tracker) {
             String name = input.requestString("New item(s) name: ");
             Item[] items = tracker.findAllByName(name);
-            if (items[0] == null) {
+            if (items.length == 0) {
                 System.out.println("Item(s) not found.");
             } else {
                 int i = 0;
-                while (items[i] != null) {
+                for (Item item : items) {
                     System.out.println(items[i++]);
                 }
             }

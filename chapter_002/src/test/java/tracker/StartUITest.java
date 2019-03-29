@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
@@ -23,14 +24,14 @@ public class StartUITest {
     private final Tracker tracker = new Tracker();
     private final PrintStream original = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
-    private String expectedMenu = String.join(System.lineSeparator(), "0. Add item to the tracker.",
+    private final String expectedMenu = String.join(System.lineSeparator(), "0. Add item to the tracker.",
             " 1. Show all items.",
             " 2. Edit item.",
             " 3. Delete item.",
             " 4. Find item by ID.",
             " 5. Find item(s) by name.",
             "");
-    private String expectedHeader = " # ||      Created      ||          ID           ||   Name" + System.lineSeparator();
+    private final String expectedHeader = " # ||      Created      ||          ID           ||   Name" + System.lineSeparator();
 
     @Before
     public void mockOutput() {
@@ -99,6 +100,15 @@ public class StartUITest {
         Input input = new StubInput(new String[]{"5", "same name", "y"});
         new StartUI(input, tracker).init();
         assertThat(getOutput().trim(), is(expectedMenu + expected.toString()));
+    }
+
+    @Test
+    public void whenInvalidInput() {
+        StringJoiner expected = new StringJoiner(System.lineSeparator());
+        expected.add("Invalid input. A number is expected. Please try again.");
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"invalid", "-1", "1"}));
+        input.requestInt("Enter", Arrays.asList(0, 1, 2, 3, 4, 5));
+        assertThat(getOutput().trim(), is(expected.toString()));
     }
 
 }

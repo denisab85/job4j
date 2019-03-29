@@ -1,7 +1,5 @@
 package tracker;
 
-import tracker.menu.InvalidInputException;
-
 import java.util.List;
 
 /**
@@ -20,14 +18,6 @@ public interface Input {
      * @return user-entered string.
      */
     String requestString(String prompt);
-
-    /**
-     * Requests an integer number.
-     *
-     * @param prompt message to display to the user.
-     * @return user-entered value.
-     */
-    int requestInt(String prompt) throws InvalidInputException;
 
     /**
      * Requests an integer number and ensures that the election is valid, i.e. is contained in the range.

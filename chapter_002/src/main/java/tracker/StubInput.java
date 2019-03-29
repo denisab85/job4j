@@ -20,11 +20,6 @@ public class StubInput implements Input {
     }
 
     @Override
-    public int requestInt(String prompt) {
-        return Integer.parseInt(requestString(prompt));
-    }
-
-    @Override
     public int requestInt(String prompt, List<Integer> range) {
         return Integer.parseInt(requestString(prompt));
     }

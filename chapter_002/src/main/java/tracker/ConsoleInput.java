@@ -1,6 +1,5 @@
 package tracker;
 
-import tracker.menu.InvalidInputException;
 import tracker.menu.MenuOutException;
 
 import java.util.List;
@@ -31,34 +30,15 @@ public class ConsoleInput implements Input {
     }
 
     /**
-     * Requests an integer number.
-     *
-     * @param prompt message to display to the user.
-     * @return user-entered value.
-     * @throws InvalidInputException if a non-integer value was entered.
-     */
-    @Override
-    public int requestInt(String prompt) throws InvalidInputException {
-        int result;
-        try {
-            result = Integer.parseInt(requestString(prompt));
-        } catch (NumberFormatException e) {
-            throw new InvalidInputException("Invalid input. A number is expected.");
-        }
-        return result;
-    }
-
-    /**
      * Requests an integer number and checks that input belongs to the range.
      *
      * @param prompt message to display to the user.
      * @param range  determines valid entry options.
      * @return user-entered value.
-     * @throws InvalidInputException if a non-integer value was entered.
-     * @throws MenuOutException      if election is not contained in the range.
+     * @throws MenuOutException if election is not contained in the range.
      */
-    public int requestInt(String prompt, List<Integer> range) throws InvalidInputException, MenuOutException {
-        int result = requestInt(prompt);
+    public int requestInt(String prompt, List<Integer> range) throws MenuOutException {
+        int result = Integer.parseInt(requestString(prompt));
         if (!range.contains(result)) {
             throw new MenuOutException(String.format("You selection must be one of: %s.", range));
         }
