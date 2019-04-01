@@ -1,8 +1,8 @@
 package tracker.menu;
 
-import tracker.Input;
 import tracker.Item;
 import tracker.Tracker;
+import tracker.ValidateInput;
 
 /**
  * Implementation of a simple user menu selector for the Tracker system.
@@ -12,7 +12,7 @@ import tracker.Tracker;
  * @since 0.1
  */
 public class Menu {
-    private final Input input;
+    private final ValidateInput input;
     private final Tracker tracker;
     private final UserAction[] actions = {
             new AddItem(),
@@ -29,7 +29,7 @@ public class Menu {
      * @param input   Input system to work with user input.
      * @param tracker Tracker object to operate on.
      */
-    public Menu(Input input, Tracker tracker) {
+    public Menu(ValidateInput input, Tracker tracker) {
         this.input = input;
         this.tracker = tracker;
     }
@@ -73,7 +73,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             String name = input.requestString("Enter item name: ");
             String description = input.requestString("Enter item description: ");
             Item item = new Item(name, description);
@@ -94,7 +94,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             System.out.println(tracker.getAllAsString());
         }
 
@@ -111,7 +111,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             String id = input.requestString("Enter item ID: ");
             Item oldItem = tracker.findById(id);
             if (oldItem == null) {
@@ -141,7 +141,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             String id = input.requestString("Enter item ID: ");
             System.out.println(tracker.delete(id) ? "Item removed." : "Item ID not found.");
         }
@@ -159,7 +159,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             String id = input.requestString("Enter item ID: ");
             Item item = tracker.findById(id);
             if (item == null) {
@@ -182,7 +182,7 @@ public class Menu {
         }
 
         @Override
-        public void execute(Input input, Tracker tracker) {
+        public void execute(ValidateInput input, Tracker tracker) {
             String name = input.requestString("New item(s) name: ");
             Item[] items = tracker.findAllByName(name);
             if (items.length == 0) {

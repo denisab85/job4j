@@ -49,7 +49,7 @@ public class StartUITest {
 
     @Test
     public void whenUserAddItemThenTrackerHasThisItem() {
-        Input input = new StubInput(new String[]{"0", "test name", "desc", "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"0", "test name", "desc", "y"}));
         new StartUI(input, tracker).init();
         assertThat(tracker.getAll()[0].getName(), is("test name"));
     }
@@ -61,7 +61,7 @@ public class StartUITest {
         expected.add("001  " + item.toString());
         item = tracker.add(new Item("test name 2", "desc2"));
         expected.add("002  " + item.toString());
-        Input input = new StubInput(new String[]{"1", "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"1", "y"}));
         new StartUI(input, tracker).init();
         assertThat(getOutput().trim(), is(expectedMenu + expectedHeader + expected.toString()));
     }
@@ -69,7 +69,7 @@ public class StartUITest {
     @Test
     public void whenUpdateThenTrackerHasUpdatedValue() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"2", item.getId(), "name replaced", "description replaced", "comment", "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"2", item.getId(), "name replaced", "description replaced", "comment", "y"}));
         new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()).getName(), is("name replaced"));
     }
@@ -77,7 +77,7 @@ public class StartUITest {
     @Test
     public void whenDeleteThenItemDisappearsFromTracker() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"3", item.getId(), "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"3", item.getId(), "y"}));
         new StartUI(input, tracker).init();
         assertThat(tracker.findById(item.getId()), nullValue());
     }
@@ -85,7 +85,7 @@ public class StartUITest {
     @Test
     public void whenFindItemByIdThenReturnItem() {
         Item item = tracker.add(new Item("test name", "desc"));
-        Input input = new StubInput(new String[]{"4", item.getId(), "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"4", item.getId(), "y"}));
         new StartUI(input, tracker).init();
         assertThat(getOutput().trim(), is(expectedMenu + item.toString()));
     }
@@ -97,7 +97,7 @@ public class StartUITest {
         expected.add(item.toString());
         item = tracker.add(new Item("same name", "desc2"));
         expected.add(item.toString());
-        Input input = new StubInput(new String[]{"5", "same name", "y"});
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"5", "same name", "y"}));
         new StartUI(input, tracker).init();
         assertThat(getOutput().trim(), is(expectedMenu + expected.toString()));
     }
@@ -106,7 +106,16 @@ public class StartUITest {
     public void whenInvalidInput() {
         StringJoiner expected = new StringJoiner(System.lineSeparator());
         expected.add("Invalid input. A number is expected. Please try again.");
-        ValidateInput input = new ValidateInput(new StubInput(new String[]{"invalid", "-1", "1"}));
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"invalid", "1"}));
+        input.requestInt("Enter", Arrays.asList(0, 1, 2, 3, 4, 5));
+        assertThat(getOutput().trim(), is(expected.toString()));
+    }
+
+    @Test
+    public void whenNegativeInput() {
+        StringJoiner expected = new StringJoiner(System.lineSeparator());
+        expected.add("You selection must be one of: [0, 1, 2, 3, 4, 5]. Please try again.");
+        ValidateInput input = new ValidateInput(new StubInput(new String[]{"-1", "1"}));
         input.requestInt("Enter", Arrays.asList(0, 1, 2, 3, 4, 5));
         assertThat(getOutput().trim(), is(expected.toString()));
     }

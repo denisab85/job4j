@@ -1,7 +1,5 @@
 package tracker;
 
-import java.util.List;
-
 /**
  * User input interface to request data entry from the user.
  *
@@ -17,15 +15,6 @@ public interface Input {
      * @param prompt message to display to the user.
      * @return user-entered string.
      */
-    String requestString(String prompt);
+    String request(String prompt);
 
-    /**
-     * Requests an integer number and ensures that the election is valid, i.e. is contained in the range.
-     * If an invalid number is entered, the user will be asked to try again.
-     *
-     * @param prompt message to display to the user.
-     * @param range  determines valid entry options.
-     * @return user-entered value.
-     */
-    int requestInt(String prompt, List<Integer> range);
 }

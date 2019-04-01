@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class StartUI {
 
-    private final Input input;
+    private final ValidateInput input;
     private final Tracker tracker;
 
     /**
@@ -25,7 +25,7 @@ public class StartUI {
      * @param input   Input system to work with user input.
      * @param tracker Tracker object to operate on.
      */
-    public StartUI(Input input, Tracker tracker) {
+    public StartUI(ValidateInput input, Tracker tracker) {
         this.tracker = tracker;
         this.input = input;
     }

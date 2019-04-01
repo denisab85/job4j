@@ -1,10 +1,8 @@
 package tracker;
 
-import tracker.menu.MenuOutException;
-
 import java.util.List;
 
-public class ValidateInput implements Input {
+public class ValidateInput {
 
     private final Input input;
 
@@ -24,9 +22,8 @@ public class ValidateInput implements Input {
      * @param prompt message to display to the user.
      * @return user-entered string.
      */
-    @Override
     public String requestString(String prompt) {
-        return this.input.requestString(prompt);
+        return this.input.request(prompt);
     }
 
     /**
@@ -37,19 +34,21 @@ public class ValidateInput implements Input {
      * @param range  determines valid entry options.
      * @return user-entered value.
      */
-    @Override
     public int requestInt(String prompt, List<Integer> range) {
         int result = 0;
         boolean valid = false;
         while (!valid) {
             try {
-                result = this.input.requestInt(prompt, range);
-                valid = true;
+                result = Integer.parseInt(requestString(prompt));
+                if (!range.contains(result)) {
+                    System.out.print(String.format("You selection must be one of: %s.", range));
+                } else {
+                    valid = true;
+                }
             } catch (NumberFormatException e) {
                 System.out.print("Invalid input. A number is expected.");
-            } catch (MenuOutException e) {
-                System.out.print(e.getLocalizedMessage());
             }
+
             if (!valid) {
                 System.out.println(" Please try again.");
             }

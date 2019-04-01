@@ -1,7 +1,7 @@
 package tracker.menu;
 
-import tracker.Input;
 import tracker.Tracker;
+import tracker.ValidateInput;
 
 public interface UserAction {
 
@@ -18,7 +18,7 @@ public interface UserAction {
      * @param input   Input system for user interaction.
      * @param tracker Tracker to operate on.
      */
-    void execute(Input input, Tracker tracker);
+    void execute(ValidateInput input, Tracker tracker);
 
     /**
      * Describes the purpose of the action.
