@@ -66,10 +66,10 @@ public class Menu {
         return actions;
     }
 
-    private static class AddItem implements UserAction {
-        @Override
-        public int getKey() {
-            return 0;
+    private static class AddItem extends BaseAction implements UserAction {
+
+        public AddItem() {
+            super(0, "Add item to the tracker.");
         }
 
         @Override
@@ -81,33 +81,24 @@ public class Menu {
             System.out.println(item);
         }
 
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Add item to the tracker.");
-        }
     }
 
-    private static class ShowAll implements UserAction {
-        @Override
-        public int getKey() {
-            return 1;
+    private static class ShowAll extends BaseAction implements UserAction {
+
+        public ShowAll() {
+            super(1, "Show all items.");
         }
 
         @Override
         public void execute(ValidateInput input, Tracker tracker) {
             System.out.println(tracker.getAllAsString());
         }
-
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Show all items.");
-        }
     }
 
-    private static class EditItem implements UserAction {
-        @Override
-        public int getKey() {
-            return 2;
+    private static class EditItem extends BaseAction implements UserAction {
+
+        public EditItem() {
+            super(2, "Edit item.");
         }
 
         @Override
@@ -127,17 +118,12 @@ public class Menu {
                 System.out.println(newItem);
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Edit item.");
-        }
     }
 
-    private static class DeleteItem implements UserAction {
-        @Override
-        public int getKey() {
-            return 3;
+    private static class DeleteItem extends BaseAction implements UserAction {
+
+        public DeleteItem() {
+            super(3, "Delete item.");
         }
 
         @Override
@@ -145,17 +131,12 @@ public class Menu {
             String id = input.requestString("Enter item ID: ");
             System.out.println(tracker.delete(id) ? "Item removed." : "Item ID not found.");
         }
-
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Delete item.");
-        }
     }
 
-    private static class FindItemById implements UserAction {
-        @Override
-        public int getKey() {
-            return 4;
+    private static class FindItemById extends BaseAction implements UserAction {
+
+        public FindItemById() {
+            super(4, "Find item by ID.");
         }
 
         @Override
@@ -168,17 +149,12 @@ public class Menu {
                 System.out.println(item);
             }
         }
-
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Find item by ID.");
-        }
     }
 
-    private static class FindItemsByName implements UserAction {
-        @Override
-        public int getKey() {
-            return 5;
+    private static class FindItemsByName extends BaseAction implements UserAction {
+
+        public FindItemsByName() {
+            super(5, "Find item(s) by name.");
         }
 
         @Override
@@ -193,11 +169,6 @@ public class Menu {
                     System.out.println(items[i++]);
                 }
             }
-        }
-
-        @Override
-        public String info() {
-            return String.format("%2d. %s", getKey(), "Find item(s) by name.");
         }
     }
 
