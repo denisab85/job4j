@@ -15,12 +15,12 @@ public class Menu {
     private final ValidateInput input;
     private final Tracker tracker;
     private final UserAction[] actions = {
-            new AddItem(),
-            new ShowAll(),
-            new EditItem(),
-            new DeleteItem(),
-            new FindItemById(),
-            new FindItemsByName()
+            new AddItem(0, "Add item to the tracker."),
+            new ShowAll(1, "Show all items."),
+            new EditItem(2, "Edit item."),
+            new DeleteItem(3, "Delete item."),
+            new FindItemById(4, "Find item by ID."),
+            new FindItemsByName(5, "Find item(s) by name.")
     };
 
     /**
@@ -68,8 +68,8 @@ public class Menu {
 
     private static class AddItem extends BaseAction implements UserAction {
 
-        public AddItem() {
-            super(0, "Add item to the tracker.");
+        public AddItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -85,8 +85,8 @@ public class Menu {
 
     private static class ShowAll extends BaseAction implements UserAction {
 
-        public ShowAll() {
-            super(1, "Show all items.");
+        public ShowAll(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -97,8 +97,8 @@ public class Menu {
 
     private static class EditItem extends BaseAction implements UserAction {
 
-        public EditItem() {
-            super(2, "Edit item.");
+        public EditItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -122,8 +122,8 @@ public class Menu {
 
     private static class DeleteItem extends BaseAction implements UserAction {
 
-        public DeleteItem() {
-            super(3, "Delete item.");
+        public DeleteItem(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -135,8 +135,8 @@ public class Menu {
 
     private static class FindItemById extends BaseAction implements UserAction {
 
-        public FindItemById() {
-            super(4, "Find item by ID.");
+        public FindItemById(int key, String name) {
+            super(key, name);
         }
 
         @Override
@@ -153,8 +153,8 @@ public class Menu {
 
     private static class FindItemsByName extends BaseAction implements UserAction {
 
-        public FindItemsByName() {
-            super(5, "Find item(s) by name.");
+        public FindItemsByName(int key, String name) {
+            super(key, name);
         }
 
         @Override
