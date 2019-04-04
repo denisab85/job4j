@@ -1,6 +1,6 @@
 package tracker.menu;
 
-public abstract class BaseAction {
+public abstract class BaseAction implements UserAction {
     private int key;
     private String name;
 

@@ -66,7 +66,7 @@ public class Menu {
         return actions;
     }
 
-    private static class AddItem extends BaseAction implements UserAction {
+    private static class AddItem extends BaseAction {
 
         public AddItem(int key, String name) {
             super(key, name);
@@ -80,10 +80,9 @@ public class Menu {
             tracker.add(item);
             System.out.println(item);
         }
-
     }
 
-    private static class ShowAll extends BaseAction implements UserAction {
+    private static class ShowAll extends BaseAction {
 
         public ShowAll(int key, String name) {
             super(key, name);
@@ -95,7 +94,7 @@ public class Menu {
         }
     }
 
-    private static class EditItem extends BaseAction implements UserAction {
+    private static class EditItem extends BaseAction {
 
         public EditItem(int key, String name) {
             super(key, name);
@@ -120,7 +119,7 @@ public class Menu {
         }
     }
 
-    private static class DeleteItem extends BaseAction implements UserAction {
+    private static class DeleteItem extends BaseAction {
 
         public DeleteItem(int key, String name) {
             super(key, name);
@@ -133,7 +132,7 @@ public class Menu {
         }
     }
 
-    private static class FindItemById extends BaseAction implements UserAction {
+    private static class FindItemById extends BaseAction {
 
         public FindItemById(int key, String name) {
             super(key, name);
@@ -151,7 +150,7 @@ public class Menu {
         }
     }
 
-    private static class FindItemsByName extends BaseAction implements UserAction {
+    private static class FindItemsByName extends BaseAction {
 
         public FindItemsByName(int key, String name) {
             super(key, name);
