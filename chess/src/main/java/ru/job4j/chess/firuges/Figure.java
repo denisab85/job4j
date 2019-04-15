@@ -5,11 +5,12 @@ public interface Figure {
 
     Cell[] way(Cell source, Cell dest);
 
+    boolean isMovePossible(Cell source, Cell dest);
+
     default String icon() {
         return String.format(
                 "%s.png", this.getClass().getSimpleName()
         );
-
     }
 
     Figure copy(Cell dest);

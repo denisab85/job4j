@@ -3,8 +3,6 @@ package ru.job4j.chess;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
-import java.util.Optional;
-
 /**
  * //TODO add comments.
  *
@@ -26,8 +24,10 @@ public class Logic {
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
-                rst = true;
-                this.figures[index] = this.figures[index].copy(dest);
+                if (wayClear(steps)) {
+                    rst = true;
+                    this.figures[index] = this.figures[index].copy(dest);
+                }
             }
         }
         return rst;
@@ -49,5 +49,27 @@ public class Logic {
             }
         }
         return rst;
+    }
+
+    private boolean wayClear(Cell[] steps) {
+        boolean result = true;
+        for (Cell cell : steps) {
+            if (occupiedBy(cell) != null) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    private Figure occupiedBy(Cell cell) {
+        Figure result = null;
+        for (Figure figure : figures) {
+            if (figure.position().equals(cell)) {
+                result = figure;
+                break;
+            }
+        }
+        return result;
     }
 }

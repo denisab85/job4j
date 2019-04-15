@@ -8,10 +8,10 @@ import ru.job4j.chess.firuges.Figure;
  * @version $Id$
  * @since 0.1
  */
-public class RookBlack implements Figure {
+public class QueenBlack implements Figure {
     private final Cell position;
 
-    public RookBlack(final Cell position) {
+    public QueenBlack(final Cell position) {
         this.position = position;
     }
 
@@ -24,7 +24,7 @@ public class RookBlack implements Figure {
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;
         int deltaY = dest.y - source.y;
-        return deltaX == 0 || deltaY == 0;
+        return deltaX == 0 || deltaY == 0 || Math.abs(deltaX) == Math.abs(deltaY);
     }
 
     @Override
@@ -46,6 +46,6 @@ public class RookBlack implements Figure {
 
     @Override
     public Figure copy(Cell dest) {
-        return new RookBlack(dest);
+        return new QueenBlack(dest);
     }
 }

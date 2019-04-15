@@ -23,8 +23,19 @@ public class PawnWhite implements Figure {
     }
 
     @Override
+    public boolean isMovePossible(Cell source, Cell dest) {
+        int deltaX = dest.x - source.x;
+        int deltaY = dest.y - source.y;
+        return (deltaY == 1 && deltaX == 0) || ( Math.abs(deltaX) == 1 && deltaY == 0);
+    }
+
+    @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        Cell[] steps = new Cell[0];
+        if (isMovePossible(source, dest)) {
+            steps = new Cell[] { dest };
+        }
+        return steps;
     }
 
     @Override

@@ -22,8 +22,19 @@ public class KingBlack implements Figure {
     }
 
     @Override
+    public boolean isMovePossible(Cell source, Cell dest) {
+        int deltaX = dest.x - source.x;
+        int deltaY = dest.y - source.y;
+        return Math.abs(deltaX) <= 1 && Math.abs(deltaY) <= 1;
+    }
+
+    @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        Cell[] steps = new Cell[0];
+        if (isMovePossible(source, dest)) {
+            steps = new Cell[] { dest };
+        }
+        return steps;
     }
 
     @Override
