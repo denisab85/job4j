@@ -5,15 +5,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import ru.job4j.chess.firuges.Cell;
-import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.*;
 import ru.job4j.chess.firuges.black.*;
 import ru.job4j.chess.firuges.white.*;
 
@@ -21,6 +21,7 @@ public class Chess extends Application {
     private static final String JOB4J = "Шахматы на www.job4j.ru";
     private final int size = 8;
     private final Logic logic = new Logic();
+    private Label message;
 
     private Rectangle buildRectangle(int x, int y, int size, boolean white) {
         Rectangle rect = new Rectangle();
@@ -60,10 +61,15 @@ public class Chess extends Application {
         );
         rect.setOnMouseReleased(
                 event -> {
-                    if (logic.move(this.findBy(momento.getX(), momento.getY()), this.findBy(event.getX(), event.getY()))) {
-                        rect.setX(((int) event.getX() / 40) * 40 + 5);
-                        rect.setY(((int) event.getY() / 40) * 40 + 5);
-                    } else {
+                    message.setText("");
+                    try {
+                        if (logic.move(this.findBy(momento.getX(), momento.getY()), this.findBy(event.getX(), event.getY()))) {
+                            rect.setX(((int) event.getX() / 40) * 40 + 5);
+                            rect.setY(((int) event.getY() / 40) * 40 + 5);
+                        }
+                    } catch (ImpossibleMoveException | OccupiedWayException | FigureNotFoundException e) {
+                        System.err.println(e.getLocalizedMessage());
+                        message.setText(e.getLocalizedMessage());
                         rect.setX(((int) momento.getX() / 40) * 40 + 5);
                         rect.setY(((int) momento.getY() / 40) * 40 + 5);
                     }
@@ -87,10 +93,13 @@ public class Chess extends Application {
     @Override
     public void start(Stage stage) {
         BorderPane border = new BorderPane();
-        HBox control = new HBox();
+        VBox control = new VBox();
         control.setPrefHeight(40);
         control.setSpacing(10.0);
-        control.setAlignment(Pos.BASELINE_CENTER);
+        control.setAlignment(Pos.CENTER);
+        message = new Label("");
+        message.setTextFill(Color.RED);
+        control.getChildren().addAll(message);
         Button start = new Button("Начать");
         start.setOnMouseClicked(
                 event -> this.refresh(border)

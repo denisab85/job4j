@@ -1,7 +1,6 @@
 package ru.job4j.chess;
 
-import ru.job4j.chess.firuges.Cell;
-import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.*;
 
 /**
  * //TODO add comments.
@@ -18,7 +17,7 @@ public class Logic {
         this.figures[this.index++] = figure;
     }
 
-    public boolean move(Cell source, Cell dest) {
+    public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
         boolean rst = false;
         int index = this.findBy(source);
         if (index != -1) {
@@ -27,8 +26,12 @@ public class Logic {
                 if (wayClear(steps)) {
                     rst = true;
                     this.figures[index] = this.figures[index].copy(dest);
+                } else {
+                    throw new OccupiedWayException("This way is blocked by other pieces. Please try another move.");
                 }
             }
+        } else {
+            throw new FigureNotFoundException("Piece not found.");
         }
         return rst;
     }

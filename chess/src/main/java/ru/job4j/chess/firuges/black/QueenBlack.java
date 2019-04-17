@@ -2,6 +2,7 @@ package ru.job4j.chess.firuges.black;
 
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
+import ru.job4j.chess.firuges.ImpossibleMoveException;
 
 /**
  * @author Petr Arsentev (parsentev@yandex.ru)
@@ -28,18 +29,18 @@ public class QueenBlack implements Figure {
     }
 
     @Override
-    public Cell[] way(Cell source, Cell dest) {
-        Cell[] steps = new Cell[0];
+    public Cell[] way(Cell source, Cell dest) throws ImpossibleMoveException {
+        if (!isMovePossible(source, dest)) {
+            throw new ImpossibleMoveException(String.format("Move is impossible for %s: %s -> %s", this.getClass().getSimpleName(), source, dest));
+        }
         int deltaX = dest.x - source.x;
         int deltaY = dest.y - source.y;
-        if (isMovePossible(source, dest)) {
-            int length = Math.max(Math.abs(deltaX), Math.abs(deltaY));
-            steps = new Cell[length];
-            int incX = (int) Math.signum(deltaX);
-            int incY = (int) Math.signum(deltaY);
-            for (int i = 0; i < length; i++) {
-                steps[i] = Cell.inPosition(source.x + incX * (i + 1), source.y + incY * (i + 1));
-            }
+        int length = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+        Cell[] steps = new Cell[length];
+        int incX = (int) Math.signum(deltaX);
+        int incY = (int) Math.signum(deltaY);
+        for (int i = 0; i < length; i++) {
+            steps[i] = Cell.inPosition(source.x + incX * (i + 1), source.y + incY * (i + 1));
         }
         return steps;
     }
