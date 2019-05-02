@@ -27,8 +27,16 @@ public class User implements Comparable<User> {
         return user == null ? -1 : this.age.compareTo(user.age);
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return String.format("%s, %d", name, age);
+    }
+
+    public Integer getAge() {
+        return age;
     }
 }
