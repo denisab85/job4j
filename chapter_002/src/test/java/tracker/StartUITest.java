@@ -51,7 +51,7 @@ public class StartUITest {
     public void whenUserAddItemThenTrackerHasThisItem() {
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"0", "test name", "desc", "y"}));
         new StartUI(input, tracker).init();
-        assertThat(tracker.getAll()[0].getName(), is("test name"));
+        assertThat(tracker.getAll().get(0).getName(), is("test name"));
     }
 
     @Test

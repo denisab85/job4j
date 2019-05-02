@@ -1,8 +1,6 @@
 package tracker;
 
-import java.util.Arrays;
-import java.util.Random;
-import java.util.StringJoiner;
+import java.util.*;
 
 /**
  * Issue tracker. Contains issues, which are represented as items.
@@ -16,7 +14,7 @@ public class Tracker {
     /**
      * Array to store entered items.
      */
-    private final Item[] items = new Item[100];
+    private final List<Item> items = new ArrayList<>();
 
     private final Random rnd = new Random();
 
@@ -32,7 +30,7 @@ public class Tracker {
      */
     public Item add(Item item) {
         item.setId(this.generateId());
-        this.items[this.position++] = item;
+        this.items.add(item);
         return item;
     }
 
@@ -54,13 +52,11 @@ public class Tracker {
      */
     public boolean replace(String id, Item item) {
         boolean replaced = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                item.setId(items[i].getId());
-                items[i] = item;
-                replaced = true;
-                break;
-            }
+        Item old = findById(id);
+        if (old != null) {
+            item.setId(old.getId());
+            items.set(items.indexOf(old), item);
+            replaced = true;
         }
         return replaced;
     }
@@ -73,13 +69,9 @@ public class Tracker {
      */
     public boolean delete(String id) {
         boolean removed = false;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getId().equals(id)) {
-                System.arraycopy(items, i + 1, items, i, position - i);
-                position--;
-                removed = true;
-                break;
-            }
+        Item item = findById(id);
+        if (item != null) {
+            removed = items.remove(item);
         }
         return removed;
     }
@@ -87,10 +79,10 @@ public class Tracker {
     /**
      * Get all entered items.
      *
-     * @return a new array consisting of items in the storage.
+     * @return items in the storage.
      */
-    public Item[] getAll() {
-        return Arrays.copyOf(items, position);
+    public List<Item> getAll() {
+        return items;
     }
 
     /**
@@ -99,15 +91,14 @@ public class Tracker {
      * @param name item name.
      * @return an array of items with corresponding names.
      */
-    public Item[] findAllByName(String name) {
-        Item[] result = new Item[position];
-        int index = 0;
-        for (int i = 0; i < position; i++) {
-            if (items[i].getName().equals(name)) {
-                result[index++] = items[i];
+    public List<Item> findAllByName(String name) {
+        List<Item> result = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getName().equals(name)) {
+                result.add(item);
             }
         }
-        return Arrays.copyOf(result, index);
+        return result;
     }
 
     /**
@@ -130,7 +121,7 @@ public class Tracker {
         StringJoiner result = new StringJoiner(System.lineSeparator());
         result.add(header);
         int index = 0;
-        for (Item item : this.getAll()) {
+        for (Item item : this.items) {
             result.add(String.format("%03d  %s", ++index, item.toString()));
         }
         return result.toString();

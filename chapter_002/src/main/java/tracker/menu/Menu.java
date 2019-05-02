@@ -4,6 +4,10 @@ import tracker.Item;
 import tracker.Tracker;
 import tracker.ValidateInput;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Implementation of a simple user menu selector for the Tracker system.
  *
@@ -14,14 +18,16 @@ import tracker.ValidateInput;
 public class Menu {
     private final ValidateInput input;
     private final Tracker tracker;
-    private final UserAction[] actions = {
-            new AddItem(0, "Add item to the tracker."),
-            new ShowAll(1, "Show all items."),
-            new EditItem(2, "Edit item."),
-            new DeleteItem(3, "Delete item."),
-            new FindItemById(4, "Find item by ID."),
-            new FindItemsByName(5, "Find item(s) by name.")
-    };
+    private final List<UserAction> actions = new ArrayList<>(
+            Arrays.asList(
+                    new AddItem(0, "Add item to the tracker."),
+                    new ShowAll(1, "Show all items."),
+                    new EditItem(2, "Edit item."),
+                    new DeleteItem(3, "Delete item."),
+                    new FindItemById(4, "Find item by ID."),
+                    new FindItemsByName(5, "Find item(s) by name.")
+            )
+    );
 
     /**
      * Creates a menu with defined input and tracker.
@@ -62,7 +68,7 @@ public class Menu {
      *
      * @return an array of all possible actions.
      */
-    public UserAction[] getActions() {
+    public List<UserAction> getActions() {
         return actions;
     }
 
@@ -159,13 +165,12 @@ public class Menu {
         @Override
         public void execute(ValidateInput input, Tracker tracker) {
             String name = input.requestString("New item(s) name: ");
-            Item[] items = tracker.findAllByName(name);
-            if (items.length == 0) {
+            List<Item> items = tracker.findAllByName(name);
+            if (items.isEmpty()) {
                 System.out.println("Item(s) not found.");
             } else {
-                int i = 0;
                 for (Item item : items) {
-                    System.out.println(items[i++]);
+                    System.out.println(item);
                 }
             }
         }
