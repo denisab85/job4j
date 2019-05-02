@@ -21,11 +21,19 @@ public class PawnBlack implements Figure {
         return this.position;
     }
 
+    /**
+     * Pawns can move forward one square, if that square is unoccupied.
+     * A pawn cannot move backward.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;
         int deltaY = dest.y - source.y;
-        return (deltaY == -1 && deltaX == 0) || (Math.abs(deltaX) == 1 && deltaY == 0);
+        return (deltaY == -1 && deltaX == 0);
     }
 
     @Override

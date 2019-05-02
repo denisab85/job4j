@@ -21,6 +21,13 @@ public class BishopBlack implements Figure {
         return this.position;
     }
 
+    /**
+     * Bishop can move any number of vacant squares in any diagonal direction.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;

@@ -21,6 +21,13 @@ public class RookWhite implements Figure {
         return this.position;
     }
 
+    /**
+     * Rook can move any number of vacant squares vertically or horizontally.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;

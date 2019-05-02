@@ -21,6 +21,14 @@ public class KnightBlack implements Figure {
         return this.position;
     }
 
+    /**
+     * Knight can move one square along any rank or file and then at an angle.
+     * The knight´s movement can also be viewed as an “L” or “7″ laid out at any horizontal or vertical angle.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;

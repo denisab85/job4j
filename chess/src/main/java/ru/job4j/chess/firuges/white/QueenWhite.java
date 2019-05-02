@@ -21,6 +21,13 @@ public class QueenWhite implements Figure {
         return this.position;
     }
 
+    /**
+     * Queen can move any number of vacant squares diagonally, horizontally, or vertically.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;

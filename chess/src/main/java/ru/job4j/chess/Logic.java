@@ -20,6 +20,7 @@ public class Logic {
     public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
         boolean rst = false;
         int index = this.findBy(source);
+
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
@@ -36,7 +37,7 @@ public class Logic {
         return rst;
     }
 
-    public void clean() {
+    void clean() {
         for (int position = 0; position != this.figures.length; position++) {
             this.figures[position] = null;
         }
@@ -68,7 +69,7 @@ public class Logic {
     private Figure occupiedBy(Cell cell) {
         Figure result = null;
         for (Figure figure : figures) {
-            if (figure.position().equals(cell)) {
+            if (figure != null && figure.position().equals(cell)) {
                 result = figure;
                 break;
             }

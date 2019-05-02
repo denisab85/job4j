@@ -21,6 +21,13 @@ public class KingBlack implements Figure {
         return this.position;
     }
 
+    /**
+     * King can move exactly one square horizontally, vertically, or diagonally.
+     *
+     * @param source initial square
+     * @param dest   desired square
+     * @return true if move is possible, false otherwise
+     */
     @Override
     public boolean isMovePossible(Cell source, Cell dest) {
         int deltaX = dest.x - source.x;
