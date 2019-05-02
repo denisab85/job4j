@@ -1,5 +1,6 @@
 package list;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class ConvertList2Array {
@@ -16,4 +17,13 @@ public class ConvertList2Array {
         return array;
     }
 
+    public List<Integer> convert(List<int[]> list) {
+        List<Integer> result = new LinkedList<>();
+        for (int[] row : list) {
+            for (int n : row) {
+                result.add(n);
+            }
+        }
+        return result;
+    }
 }
