@@ -1,0 +1,21 @@
+# Using the Java language. Travis CI also supports other languages.
+language: java
+# Regular user will be utilized for builds.
+sudo: false
+
+# When build is done - run a script to collect JaCoCo stats.
+# A 3-rd party service is used - https://codecov.io/
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# In case of build failure send email notification.
+notifications:
+  email:
+    recipients:
+      - denisab85@gmail.com
+    on_success: never # default: change
+    on_failure: always # default: always
+
+env:
+  global:
+    - CODECOV_TOKEN="92437b96-2cd9-425a-a90a-238c35304076"
