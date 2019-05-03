@@ -1,6 +1,9 @@
 package tracker;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.StringJoiner;
 
 /**
  * Issue tracker. Contains issues, which are represented as items.
@@ -48,15 +51,18 @@ public class Tracker {
      *
      * @param id   unique identifier of the item to be replaced.
      * @param item replacement item.
-     * @return true if the item was found and replaced, false if it was not found.
+     * @return <tt>true</tt> if this tracker contained the specified item.
      */
     public boolean replace(String id, Item item) {
         boolean replaced = false;
-        Item old = findById(id);
-        if (old != null) {
-            item.setId(old.getId());
-            items.set(items.indexOf(old), item);
-            replaced = true;
+        for (int i = 0; i < this.items.size(); i++) {
+            Item old = this.items.get(i);
+            if (old.getId().equals(id)) {
+                item.setId(old.getId());
+                items.set(i, item);
+                replaced = true;
+                break;
+            }
         }
         return replaced;
     }
@@ -65,13 +71,17 @@ public class Tracker {
      * Removes an item from the storage.
      *
      * @param id unique identifier of the item to be removed.
-     * @return true if the item was found and removed, false if it was not found.
+     * @return <tt>true</tt> if this tracker contained the specified item.
      */
     public boolean delete(String id) {
         boolean removed = false;
-        Item item = findById(id);
-        if (item != null) {
-            removed = items.remove(item);
+        for (int i = 0; i < this.items.size(); i++) {
+            Item old = this.items.get(i);
+            if (old.getId().equals(id)) {
+                items.remove(i);
+                removed = true;
+                break;
+            }
         }
         return removed;
     }
