@@ -61,6 +61,6 @@ public class Triangle {
         if (ab >= p || ac >= p || bc >= p) {
             return false;
         }
-        return (ab <= 0 || ac <= 0 || bc <= 0);
+        return (ab > 0 && ac > 0 && bc > 0);
     }
 }
