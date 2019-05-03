@@ -18,10 +18,10 @@ public enum Cell {
         this.y = y;
     }
 
-    public static Cell inPosition(int x, int y){
+    public static Cell inPosition(int x, int y) {
         Cell result = Cell.A1;
-        for (Cell cell : Cell.values()){
-            if (cell.x == x && cell.y == y){
+        for (Cell cell : Cell.values()) {
+            if (cell.x == x && cell.y == y) {
                 result = cell;
                 break;
             }
