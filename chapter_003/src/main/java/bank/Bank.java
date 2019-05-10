@@ -12,13 +12,14 @@ public class Bank {
 
     private final SortedMap<User, List<Account>> userAccounts = new TreeMap<>();
 
+    /**
+     * If the specified user does not exist in the bank, adds the user with an empty account list.
+     *
+     * @param user user to add.
+     * @return {@code true} if the user did not exist.
+     */
     public boolean addUser(User user) {
-        boolean result = false;
-        if (!userExists(user)) {
-            this.userAccounts.put(user, new ArrayList<>());
-            result = true;
-        }
-        return result;
+        return this.userAccounts.putIfAbsent(user, new ArrayList<>()) == null;
     }
 
     /**
@@ -71,7 +72,7 @@ public class Bank {
     /**
      * Deletes specified account belonging to the user.
      *
-     * @param user user whose account should be deleted.
+     * @param user    user whose account should be deleted.
      * @param account account to delete.
      * @return {@code true} if @param account existed in @param user's accounts.
      */
