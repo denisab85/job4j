@@ -8,6 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -24,6 +25,14 @@ public class StartUITest {
     private final Tracker tracker = new Tracker();
     private final PrintStream original = System.out;
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+    };
+
     private final String expectedMenu = String.join(System.lineSeparator(), "0. Add item to the tracker.",
             " 1. Show all items.",
             " 2. Edit item.",
@@ -50,7 +59,7 @@ public class StartUITest {
     @Test
     public void whenUserAddItemThenTrackerHasThisItem() {
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"0", "test name", "desc", "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.getAll().get(0).getName(), is("test name"));
     }
 
@@ -62,7 +71,7 @@ public class StartUITest {
         item = tracker.add(new Item("test name 2", "desc2"));
         expected.add("002  " + item.toString());
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"1", "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(getOutput().trim(), is(expectedMenu + expectedHeader + expected.toString()));
     }
 
@@ -70,7 +79,7 @@ public class StartUITest {
     public void whenUpdateThenTrackerHasUpdatedValue() {
         Item item = tracker.add(new Item("test name", "desc"));
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"2", item.getId(), "name replaced", "description replaced", "comment", "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("name replaced"));
     }
 
@@ -78,7 +87,7 @@ public class StartUITest {
     public void whenDeleteThenItemDisappearsFromTracker() {
         Item item = tracker.add(new Item("test name", "desc"));
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"3", item.getId(), "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()), nullValue());
     }
 
@@ -86,7 +95,7 @@ public class StartUITest {
     public void whenFindItemByIdThenReturnItem() {
         Item item = tracker.add(new Item("test name", "desc"));
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"4", item.getId(), "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(getOutput().trim(), is(expectedMenu + item.toString()));
     }
 
@@ -98,7 +107,7 @@ public class StartUITest {
         item = tracker.add(new Item("same name", "desc2"));
         expected.add(item.toString());
         ValidateInput input = new ValidateInput(new StubInput(new String[]{"5", "same name", "y"}));
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(getOutput().trim(), is(expectedMenu + expected.toString()));
     }
 

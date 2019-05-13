@@ -5,6 +5,7 @@ import tracker.menu.UserAction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * CLI for the Issue tracker.
@@ -18,6 +19,7 @@ public class StartUI {
 
     private final ValidateInput input;
     private final Tracker tracker;
+    private final Consumer<String> output;
 
     /**
      * Creates a UI with defined Tracker and Input system.
@@ -25,9 +27,10 @@ public class StartUI {
      * @param input   Input system to work with user input.
      * @param tracker Tracker object to operate on.
      */
-    public StartUI(ValidateInput input, Tracker tracker) {
+    public StartUI(ValidateInput input, Tracker tracker, Consumer<String> output) {
         this.tracker = tracker;
         this.input = input;
+        this.output = output;
     }
 
     /**
@@ -36,7 +39,7 @@ public class StartUI {
      * @param args ignored.
      */
     public static void main(String[] args) {
-        StartUI ui = new StartUI(new ValidateInput(new ConsoleInput()), new Tracker());
+        StartUI ui = new StartUI(new ValidateInput(new ConsoleInput()), new Tracker(), System.out::println);
         ui.init();
     }
 
@@ -44,7 +47,7 @@ public class StartUI {
      * Initializes the menu and dispatches user commands until exit.
      */
     public void init() {
-        Menu menu = new Menu(input, tracker);
+        Menu menu = new Menu(input, tracker, output);
         boolean exit;
         List<Integer> range = new ArrayList<>();
         for (UserAction action : menu.getActions()) {

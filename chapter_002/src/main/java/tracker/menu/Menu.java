@@ -7,6 +7,7 @@ import tracker.ValidateInput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Implementation of a simple user menu selector for the Tracker system.
@@ -18,6 +19,7 @@ import java.util.List;
 public class Menu {
     private final ValidateInput input;
     private final Tracker tracker;
+    private final Consumer<String> output;
     private final List<UserAction> actions = new ArrayList<>(
             Arrays.asList(
                     new AddItem(0, "Add item to the tracker."),
@@ -35,9 +37,10 @@ public class Menu {
      * @param input   Input system to work with user input.
      * @param tracker Tracker object to operate on.
      */
-    public Menu(ValidateInput input, Tracker tracker) {
+    public Menu(ValidateInput input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
     }
 
     /**
@@ -59,7 +62,7 @@ public class Menu {
      */
     public void show() {
         for (UserAction action : this.actions) {
-            System.out.println(action.info());
+            output.accept(action.info());
         }
     }
 
@@ -72,7 +75,7 @@ public class Menu {
         return actions;
     }
 
-    private static class AddItem extends BaseAction {
+    private class AddItem extends BaseAction {
 
         public AddItem(int key, String name) {
             super(key, name);
@@ -84,11 +87,11 @@ public class Menu {
             String description = input.requestString("Enter item description: ");
             Item item = new Item(name, description);
             tracker.add(item);
-            System.out.println(item);
+            output.accept(item.toString());
         }
     }
 
-    private static class ShowAll extends BaseAction {
+    private class ShowAll extends BaseAction {
 
         public ShowAll(int key, String name) {
             super(key, name);
@@ -96,11 +99,11 @@ public class Menu {
 
         @Override
         public void execute(ValidateInput input, Tracker tracker) {
-            System.out.println(tracker.getAllAsString());
+            output.accept(tracker.getAllAsString());
         }
     }
 
-    private static class EditItem extends BaseAction {
+    private class EditItem extends BaseAction {
 
         public EditItem(int key, String name) {
             super(key, name);
@@ -111,21 +114,21 @@ public class Menu {
             String id = input.requestString("Enter item ID: ");
             Item oldItem = tracker.findById(id);
             if (oldItem == null) {
-                System.out.println("Item ID not found.");
+                output.accept("Item ID not found.");
             } else {
-                System.out.println(oldItem);
+                output.accept(oldItem.toString());
                 String name = input.requestString("Enter newItem name: ");
                 String description = input.requestString("Enter newItem description: ");
                 String comments = input.requestString("Enter newItem comments: ");
                 Item newItem = new Item(name, description);
                 newItem.setComments(comments);
                 tracker.replace(id, newItem);
-                System.out.println(newItem);
+                output.accept(newItem.toString());
             }
         }
     }
 
-    private static class DeleteItem extends BaseAction {
+    private class DeleteItem extends BaseAction {
 
         public DeleteItem(int key, String name) {
             super(key, name);
@@ -134,11 +137,11 @@ public class Menu {
         @Override
         public void execute(ValidateInput input, Tracker tracker) {
             String id = input.requestString("Enter item ID: ");
-            System.out.println(tracker.delete(id) ? "Item removed." : "Item ID not found.");
+            output.accept(tracker.delete(id) ? "Item removed." : "Item ID not found.");
         }
     }
 
-    private static class FindItemById extends BaseAction {
+    private class FindItemById extends BaseAction {
 
         public FindItemById(int key, String name) {
             super(key, name);
@@ -149,14 +152,14 @@ public class Menu {
             String id = input.requestString("Enter item ID: ");
             Item item = tracker.findById(id);
             if (item == null) {
-                System.out.println("Item ID not found.");
+                output.accept("Item ID not found.");
             } else {
-                System.out.println(item);
+                output.accept(item.toString());
             }
         }
     }
 
-    private static class FindItemsByName extends BaseAction {
+    private class FindItemsByName extends BaseAction {
 
         public FindItemsByName(int key, String name) {
             super(key, name);
@@ -167,10 +170,10 @@ public class Menu {
             String name = input.requestString("New item(s) name: ");
             List<Item> items = tracker.findAllByName(name);
             if (items.isEmpty()) {
-                System.out.println("Item(s) not found.");
+                output.accept("Item(s) not found.");
             } else {
                 for (Item item : items) {
-                    System.out.println(item);
+                    output.accept(item.toString());
                 }
             }
         }
