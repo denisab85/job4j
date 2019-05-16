@@ -1,8 +1,8 @@
-package stream;
+package stream.school;
 
 public class Student {
 
-    private int score;
+    private final int score;
 
     public Student(int score) {
         this.score = score;

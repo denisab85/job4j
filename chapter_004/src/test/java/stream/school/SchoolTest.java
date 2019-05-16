@@ -1,6 +1,8 @@
-package stream;
+package stream.school;
 
 import org.junit.Test;
+import stream.school.School;
+import stream.school.Student;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,15 +13,15 @@ import static org.junit.Assert.assertThat;
 
 public class SchoolTest {
 
-    private Student student10 = new Student(10);
-    private Student student25 = new Student(25);
-    private Student student40 = new Student(40);
-    private Student student55 = new Student(55);
-    private Student student70 = new Student(70);
-    private Student student85 = new Student(85);
-    private Student student100 = new Student(100);
-    private List<Student> students = Arrays.asList(student10, student25, student40, student55, student70, student85, student100);
-    private School school = new School();
+    private final Student student10 = new Student(10);
+    private final Student student25 = new Student(25);
+    private final Student student40 = new Student(40);
+    private final Student student55 = new Student(55);
+    private final Student student70 = new Student(70);
+    private final Student student85 = new Student(85);
+    private final Student student100 = new Student(100);
+    private final List<Student> students = Arrays.asList(student10, student25, student40, student55, student70, student85, student100);
+    private final School school = new School();
 
     @Test
     public void whenCollectStudentsA() {
